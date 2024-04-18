@@ -11,53 +11,57 @@ datasource db {
 }
 
 model Insurance {
-  insurance_id Int @id @default(autoincrement())
-  company String
+  insurance_id Int    @id @default(autoincrement())
+  company      String
 }
 
 model Company {
   company String @id
-  amount Int
+  amount  Int
 }
 
 model LabResults {
-  lab_results String @id
-  post_diagnosis String
-  current_medication String 
+  lab_results        String @id
+  post_diagnosis     String
+  current_medication String
 }
 
 model AllergyList {
   allergy_list String @id
-  allergies String
+  allergies    String
 }
 
 model Treatments {
-  treatment_id Int @id @default(autoincrement())
-  outcome String
-  start_data String
-  end_data String
+  treatment_id Int    @id @default(autoincrement())
+  outcome      String
+  start_data   String
+  end_data     String
 }
 
 model Billing {
-  patient_id Int 
-  billing_id Int @id
-  insurance_id Int 
+  patient_id    Int
+  billing_id    Int
+  insurance_id  Int
   itemized_cost Int
-  Date String
+  Date          String
+
+  @@id([patient_id, billing_id, insurance_id])
 }
 
 model TotalCost {
-  total_cost Int @id
+  total_cost    Int @id
   itemized_cost Int
 }
 
 model Appointment {
-  appointment_id Int @id @default(autoincrement())
-  patient_id Int
+  appointment_id  Int
+  patient_id      Int
   professional_id Int
-  data String
-  time String
-  purpose String
+  data            String
+  time            String
+  purpose         String
+
+  @@id([patient_id, appointment_id])
 }
 
 model Patient {
@@ -66,80 +70,81 @@ model Patient {
 }
 
 model MedicalRecords {
-  record_id Int @id @default(autoincrement())
+  record_id    Int    @id @default(autoincrement())
   allergy_list String
-  lab_results String
+  lab_results  String
 }
 
 model Attend {
   appointment_id Int
-  employee_id Int 
-  purpose String  
+  employee_id    Int
+  purpose        String
 
-   @@id ([appointment_id, employee_id])
+  @@id([appointment_id, employee_id])
 }
 
 model PhoneNumbers {
-  pid Int @id @default(autoincrement())
+  pid          Int @id @default(autoincrement())
   phone_number Int
 }
 
 model Payement {
-  billing_id Int@id @default(autoincrement())
+  billing_id     Int    @id @default(autoincrement())
   payment_method String
 }
 
-model Location{
+model Location {
   street String @id
-  zip Int
+  zip    Int
 }
+
 model Person {
- first String 
- middle String
- last String
- DOB DateTime
- city String
- street String
- State String
- PatientFlag Int
- HCPFlag Int
- PatientState String
- Patient_id Int
- PID Int
- Employee_id Int
+  first        String
+  middle       String
+  last         String
+  DOB          DateTime
+  city         String
+  street       String
+  State        String
+  PatientFlag  Int
+  HCPFlag      Int
+  PatientState String
+  Patient_id   Int
+  PID          Int
+  Employee_id  Int
 
- @@id([PID, Employee_id, Patient_id])
+  @@id([PID, Employee_id, Patient_id])
 }
 
-model Employee{
-  Employee_id Int @id
-  Specialization String
-  WorkingHours Int
+model Employee {
+  Employee_id       Int    @id
+  Specialization    String
+  WorkingHours      Int
   YearsofExperience Int
 }
 
 model Specialization {
   Specialization String @id
-  Department String 
+  Department     String
 }
 
 model Assigned {
-  record_id Int
+  record_id   Int
   employee_id Int
   lab_results String
 
-  @@id ([record_id, employee_id])
+  @@id([record_id, employee_id])
 }
 
 model Prescribed {
   treatment_id Int
-  employee_id Int
-  description String
+  employee_id  Int
+  description  String
 
-  @@id ([treatment_id, employee_id])
+  @@id([treatment_id, employee_id])
 }
 
 model Treatment_Prescription_Record {
-  treatment_id Int @id
+  treatment_id        Int    @id
   prescription_record String
 }
