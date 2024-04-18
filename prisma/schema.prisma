@@ -15,6 +15,56 @@ model Insurance {
   company String
 }
 
+model Company {
+  company String @id
+  amount Int
+}
+
+model LabResults {
+  lab_results String @id
+  post_diagnosis String
+  current_medication String 
+}
+
+model AllergyList {
+  allergy_list String @id
+  allergies String
+}
+
+model Treatments {
+  treatment_id Int @id @default(autoincrement())
+  outcome String
+  start_data String
+  end_data String
+}
+
+model Billing {
+  patient_id Int 
+  billing_id Int @id
+  insurance_id Int 
+  itemized_cost Int
+  Date String
+}
+
+model TotalCost {
+  total_cost Int @id
+  itemized_cost Int
+}
+
+model Appointment {
+  appointment_id Int @id @default(autoincrement())
+  patient_id Int
+  professional_id Int
+  data String
+  time String
+  purpose String
+}
+
+model Patient {
+  patient_id Int @id
+  billing_id Int
+}
+
 model MedicalRecords {
   record_id Int @id @default(autoincrement())
   allergy_list String
