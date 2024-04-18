@@ -11,8 +11,9 @@ datasource db {
 }
 
 model Insurance {
-  insurance_id Int    @id @default(autoincrement())
+  insurance_id Int       @id @default(autoincrement())
   company      String
+  Billing      Billing[]
 }
 
 model Company {
@@ -41,14 +42,14 @@ model Treatments {
 }
 
 model Billing {
-  Payment       Payment[]
-  patient_id    Int
-  billing_id    Int       @unique
-  insurance_id  Int
-  itemized_cost Int
-  Date          String
-  Person        Person[]
-
+  Payment      Payment[]
+  patient_id   Int
+  billing_id   Int       @unique
+  insurance_id Int
+  Date         String
+  Person       Person[]
+  Insurance    Insurance @relation(fields: [insurance_id], references: [insurance_id])
+  Patient      Patient   @relation(fields: [patient_id], references: [patient_id])
   @@id([patient_id, billing_id, insurance_id])
 }
 
@@ -59,32 +60,40 @@ model TotalCost {
 
 model Appointment {
   appointment_id  Int
+  Patient         Patient? @relation(fields: [patient_id], references: [patient_id])
   patient_id      Int
   professional_id Int
   data            String
   time            String
   purpose         String
+  Attend          Attend[]
 
-  @@id([patient_id, appointment_id])
+  @@unique([appointment_id])
 }
 
 model Patient {
-  patient_id Int @id
-  billing_id Int
+  patient_id   Int           @id
+  billing_id   Int
+  Billing      Billing[]
+  Appointments Appointment[]
 }
 
 model MedicalRecords {
-  record_id    Int    @id @default(autoincrement())
+  record_id    Int        @id @default(autoincrement())
   allergy_list String
   lab_results  String
+  Assigned     Assigned[]
 }
 
 model Attend {
+  Appointment    Appointment @relation(fields: [appointment_id], references: [appointment_id])
   appointment_id Int
+  Employee       Employee    @relation(fields: [employee_id], references: [Employee_id])
   employee_id    Int
   purpose        String
 
   @@id([appointment_id, employee_id])
+  @@unique([appointment_id, employee_id])
 }
 
 model PhoneNumbers {
@@ -131,6 +140,8 @@ model Employee {
   WorkingHours      Int
   YearsofExperience Int
   prescribed        Prescribed[]
+  Attends           Attend[]
+  Assigned          Assigned[]
 }
 
 model Specialization {
@@ -139,7 +150,9 @@ model Specialization {
 }
 
 model Assigned {
+  Record      MedicalRecords @relation(fields: [record_id], references: [record_id])
   record_id   Int
+  Employee    Employee       @relation(fields: [employee_id], references: [Employee_id])
   employee_id Int
   lab_results String
 
@@ -158,7 +171,6 @@ model Prescribed {
 
 model Treatment_Prescription_Record {
   treatment Treatments @relation(fields: [treatment_id], references: [treatment_id])
-
   treatment_id        Int    @id
   prescription_record String
 }
