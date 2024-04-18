@@ -32,18 +32,22 @@ model AllergyList {
 }
 
 model Treatments {
-  treatment_id Int    @id @default(autoincrement())
-  outcome      String
-  start_data   String
-  end_data     String
+  treatment_id                  Int                             @id @default(autoincrement())
+  outcome                       String
+  start_data                    String
+  end_data                      String
+  prescribed                    Prescribed[]
+  Treatment_Prescription_Record Treatment_Prescription_Record[]
 }
 
 model Billing {
+  Payment       Payment[]
   patient_id    Int
-  billing_id    Int
+  billing_id    Int       @unique
   insurance_id  Int
   itemized_cost Int
   Date          String
+  Person        Person[]
 
   @@id([patient_id, billing_id, insurance_id])
 }
@@ -84,12 +88,14 @@ model Attend {
 }
 
 model PhoneNumbers {
-  pid          Int @id @default(autoincrement())
+  phone        Person? @relation(fields: [pid], references: [PID])
+  pid          Int     @id @default(autoincrement())
   phone_number Int
 }
 
-model Payement {
-  billing_id     Int    @id @default(autoincrement())
+model Payment {
+  billing        Billing? @relation(fields: [billing_id], references: [billing_id])
+  billing_id     Int      @id @default(autoincrement())
   payment_method String
 }
 
@@ -99,6 +105,9 @@ model Location {
 }
 
 model Person {
+  PhoneNumbers PhoneNumbers[]
+  billing      Billing?       @relation(fields: [billing_id], references: [billing_id])
+  billing_id   Int
   first        String
   middle       String
   last         String
@@ -110,17 +119,18 @@ model Person {
   HCPFlag      Int
   PatientState String
   Patient_id   Int
-  PID          Int
+  PID          Int            @unique
   Employee_id  Int
 
   @@id([PID, Employee_id, Patient_id])
 }
 
 model Employee {
-  Employee_id       Int    @id
+  Employee_id       Int          @id
   Specialization    String
   WorkingHours      Int
   YearsofExperience Int
+  prescribed        Prescribed[]
 }
 
 model Specialization {
@@ -137,6 +147,8 @@ model Assigned {
 }
 
 model Prescribed {
+  treatment    Treatments @relation(fields: [treatment_id], references: [treatment_id])
+  employee     Employee   @relation(fields: [employee_id], references: [Employee_id])
   treatment_id Int
   employee_id  Int
   description  String
@@ -145,6 +157,8 @@ model Prescribed {
 }
 
 model Treatment_Prescription_Record {
+  treatment Treatments @relation(fields: [treatment_id], references: [treatment_id])
+
   treatment_id        Int    @id
   prescription_record String
 }
