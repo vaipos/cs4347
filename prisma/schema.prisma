@@ -48,8 +48,8 @@ model Billing {
   insurance_id Int
   Date         String
   Person       Person[]
-  Insurance    Insurance @relation(fields: [insurance_id], references: [insurance_id])
-  Patient      Patient   @relation(fields: [patient_id], references: [patient_id])
+  Insurance    Insurance? @relation(fields: [insurance_id], references: [insurance_id])
+  Patient      Patient?   @relation(fields: [patient_id], references: [patient_id])
   @@id([patient_id, billing_id, insurance_id])
 }
 
@@ -86,9 +86,9 @@ model MedicalRecords {
 }
 
 model Attend {
-  Appointment    Appointment @relation(fields: [appointment_id], references: [appointment_id])
+  Appointment    Appointment? @relation(fields: [appointment_id], references: [appointment_id])
   appointment_id Int
-  Employee       Employee    @relation(fields: [employee_id], references: [Employee_id])
+  Employee       Employee?    @relation(fields: [employee_id], references: [Employee_id])
   employee_id    Int
   purpose        String
 
@@ -150,9 +150,9 @@ model Specialization {
 }
 
 model Assigned {
-  Record      MedicalRecords @relation(fields: [record_id], references: [record_id])
+  Record      MedicalRecords? @relation(fields: [record_id], references: [record_id])
   record_id   Int
-  Employee    Employee       @relation(fields: [employee_id], references: [Employee_id])
+  Employee    Employee?       @relation(fields: [employee_id], references: [Employee_id])
   employee_id Int
   lab_results String
 
@@ -160,8 +160,8 @@ model Assigned {
 }
 
 model Prescribed {
-  treatment    Treatments @relation(fields: [treatment_id], references: [treatment_id])
-  employee     Employee   @relation(fields: [employee_id], references: [Employee_id])
+  treatment    Treatments? @relation(fields: [treatment_id], references: [treatment_id])
+  employee     Employee?   @relation(fields: [employee_id], references: [Employee_id])
   treatment_id Int
   employee_id  Int
   description  String
@@ -170,7 +170,7 @@ model Prescribed {
 }
 
 model Treatment_Prescription_Record {
-  treatment Treatments @relation(fields: [treatment_id], references: [treatment_id])
+  treatment Treatments? @relation(fields: [treatment_id], references: [treatment_id])
   treatment_id        Int    @id
   prescription_record String
 }
