@@ -75,6 +75,10 @@ model Attend {
   appointment_id Int
   employee_id Int 
   purpose String  
+
+   @@id ([appointment_id, employee_id])
+}
+
 model Person {
  first String 
  middle String
@@ -89,6 +93,7 @@ model Person {
  Patient_id Int
  PID Int
  Employee_id Int
+
  @@id([PID, Employee_id, Patient_id])
 }
 
@@ -102,10 +107,6 @@ model Employee{
 model Specialization {
   Specialization String @id
   Department String 
-}
-
-
-  @@id ([appointment_id, employee_id])
 }
 
 model Assigned {
