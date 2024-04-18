@@ -20,12 +20,6 @@ model Company {
   amount Int
 }
 
-model MedicalRecords {
-  record_id Int @id @default(autoincrement())
-  allergy_list String
-  lab_results String
-}
-
 model LabResults {
   lab_results String @id
   post_diagnosis String
@@ -66,7 +60,18 @@ model Appointment {
   purpose String
 }
 
-model PhoneNumber {
+model Patient {
+  patient_id Int @id
+  billing_id Int
+}
+
+model MedicalRecords {
+  record_id Int @id @default(autoincrement())
+  allergy_list String
+  lab_results String
+}
+
+model PhoneNumbers {
   pid Int @id @default(autoincrement())
   phone_number Int
 }
@@ -76,12 +81,8 @@ model Payement {
   payment_method String
 }
 
-model Patient {
-  patient_id Int @id @default(autoincrement())
-  billing_id Int
-}
-
 model Location{
   street String @id
   zip Int
 }
+
