@@ -71,4 +71,31 @@ model MedicalRecords {
   lab_results String
 }
 
+model Attend {
+  appointment_id Int
+  employee_id Int 
+  purpose String  
 
+  @@id ([appointment_id, employee_id])
+}
+
+model Assigned {
+  record_id Int
+  employee_id Int
+  lab_results String
+
+  @@id ([record_id, employee_id])
+}
+
+model Prescribed {
+  treatment_id Int
+  employee_id Int
+  description String
+
+  @@id ([treatment_id, employee_id])
+}
+
+model Treatment_Prescription_Record {
+  treatment_id Int @id
+  prescription_record String
+}
