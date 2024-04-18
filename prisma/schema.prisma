@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Ayo {
-  id Int @id
+model Insurance {
+  insurance_id Int @id @default(autoincrement())
+  company String
 }
+
+model MedicalRecords {
+  record_id Int @id @default(autoincrement())
+  allergy_list String
+  lab_results String
+}
+
+
