@@ -85,4 +85,33 @@ model Location{
   street String @id
   zip Int
 }
+model Person {
+ first String 
+ middle String
+ last String
+ DOB DateTime
+ city String
+ street String
+ State String
+ PatientFlag Int
+ HCPFlag Int
+ PatientState String
+ Patient_id Int
+ PID Int
+ Employee_id Int
+ @@id([PID, Employee_id, Patient_id])
+}
+
+model Employee{
+  Employee_id Int @id
+  Specialization String
+  WorkingHours Int
+  YearsofExperience Int
+}
+
+model Specialization {
+  Specialization String @id
+  Department String 
+}
+
 
