@@ -79,6 +79,20 @@ model Attend {
    @@id ([appointment_id, employee_id])
 }
 
+model PhoneNumbers {
+  pid Int @id @default(autoincrement())
+  phone_number Int
+}
+
+model Payement {
+  billing_id Int@id @default(autoincrement())
+  payment_method String
+}
+
+model Location{
+  street String @id
+  zip Int
+}
 model Person {
  first String 
  middle String
